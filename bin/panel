@@ -8,6 +8,7 @@ Object.send :remove_const, :Monitor # I'll need this tyvm
 module Icon
     { "\ue00b" => :bluetooth,
       "\ue015" => :clock,
+      "\ue09f" => :display,
       "\ue01b" => :thermal,
       "\ue026" => :load,
       "\ue028" => :memory,
@@ -15,7 +16,11 @@ module Icon
       "\ue060" => :net_up,
       "\ue061" => :net_down,
       "\ue0fd" => :music,
-      "\ue214" => :battery,
+      "\ue05d" => :volume,
+      "\ue214" => :battery_high,
+      "\ue213" => :battery_medium,
+      "\ue212" => :battery_low,
+      "\ue211" => :battery_critical,
       "\ue215" => :battery_charging,
       "\ue277" => :desktop_occupied,
       "\ue278" => :desktop_free,
@@ -300,7 +305,16 @@ class Panel
         value = Battery.value
         return if value.nil?
 
-        icon  = Battery.charging? ? Icon.battery_charging : Icon.battery
+        if Battery.charging?
+            icon = Icon.battery_charging
+        else
+            icon  = Util.threshold value,
+                0 => Icon.battery_critical,
+                10 => Icon.battery_low,
+                30 => Icon.battery_medium,
+                60 => Icon.battery_high
+        end
+
         text  = "#{value}%"
         color = Util.threshold value,
             0 => Color.blink(:red, :white),
@@ -377,6 +391,22 @@ class Panel
         draw_system icon, text, color
     end
 
+    def brightness
+        icon  = Icon.display
+        text  = Brightness.level
+        color = Color.blue
+
+        draw_system icon, text, color
+    end
+
+    def volume
+        icon  = Icon.volume
+        text  = Volume.percentage
+        color = Color.green
+
+        draw_system icon, text, color
+    end
+
     def update
         return if @drawing
 
@@ -411,6 +441,8 @@ class Panel
 
         if monitor.secondary? || !Monitor.secondary?
             bluetooth if Bluetooth.connected
+            volume
+            brightness
             net_down
             net_up
             loadavg
@@ -528,7 +560,7 @@ module Network
 
     def self.update
         Thread.new(self) do |net|
-            net.parse_vnstat `vnstat -tr 5 -ru`
+            net.parse_vnstat `vnstat -tr 5 -ru -i wlp3s0`
         end
     end
 
@@ -599,12 +631,40 @@ module Music
     system_reader :artist, :album, :title, :state
 
     def self.update
-        s = TCPSocket.new 'localhost', 5704
-        json = s.gets
-        data = JSON.parse json
-        data.each do |key, value|
-            instance_variable_set :"@#{key}", value
-        end
+        #s = TCPSocket.new 'localhost', 5704
+        #json = s.gets
+        #data = JSON.parse json
+        #data.each do |key, value|
+        #    instance_variable_set :"@#{key}", value
+        #end
+    end
+end
+
+module Brightness
+    include System
+
+    @last_update = 0
+    @update_interval = 1
+
+    system_reader :level
+
+    def self.update
+        ll = `light`
+
+        @level = "#{ll.to_f.round(-1)}%"
+    end
+end
+
+module Volume
+    include System
+
+    @last_update = 0
+    @update_interval = 1
+
+    system_reader :percentage
+
+    def self.update
+        @percentage = `amixer get Master | awk -F"[][]" '/%/ { print $2;exit }'`
     end
 end
 
