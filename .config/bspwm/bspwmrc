@@ -15,7 +15,7 @@ wp &
 panel &
 kb &
 dunst &
-vpsnotifyc &
+#vpsnotifyc &
 sxhkd -f 60 &
 
 # Run local .xenv
