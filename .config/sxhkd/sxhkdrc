@@ -73,7 +73,7 @@ super + Return
     urxvtc
 
 super + r
-    dmenu_launcher run
+    dmenu_run
 
 # make sxhkd reload its configuration files:
 super + Escape
@@ -114,3 +114,9 @@ super + n
 
 super + i
     urxvtc -e irssi
+
+super + ctrl + o
+    open_sesame
+
+super + ctrl + {Up,Down}
+    change_brightness {up,down}
