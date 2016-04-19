@@ -11,6 +11,7 @@ urxvtd -f -o
 compton --dbus &
 xsetroot -cursor_name left_ptr &
 xset +fp /usr/share/fonts/local/ &
+xset +fp ~/.fonts &
 wp &
 panel &
 kb &
