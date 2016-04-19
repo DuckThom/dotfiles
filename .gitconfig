@@ -1,16 +1,15 @@
 [user]
-    name = Sam Lakerveld
-    email = dark@novaember.com
+    name = Thomas Wiringa
+    email = thomas.wiringa@gmail.com
 [core]
-    editor = nvim
-    excludesfile = /home/dark/.gitignore_global
+    editor = vim
 [push]
     default = simple
 [color]
     ui = true
 [alias]
     fuck-it = reset --hard
-    fuck-it-all = "!git fuck-it && git clean -fdx"
+    fuck-it-all = "!git fuck-it && git clean -fd"
 
     st = status
     ci = commit --verbose
@@ -46,10 +45,12 @@
     head = !git r -1
     h = !git head
     hp = "!. ~/.githelpers && show_git_head"
-    r = !GIT_NO_PAGER=1 git l -20
+    r = !GIT_NO_PAGER=1 git l -30
     ra = !git r --all
     l = "!. ~/.githelpers && pretty_git_log"
     la = !git l --all
 
 [merge]
     tool = vimdiff
+[credential]
+	helper = store
