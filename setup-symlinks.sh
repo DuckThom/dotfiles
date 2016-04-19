@@ -38,7 +38,7 @@ do
     ln -s "../$DIR/.config/$file" ".config/"
 done 2>/tmp/.dark-dotfiles-setup-script.log
 
-for file in .conkyrc .gitconfig .githelpers .Xresources .zshrc
+for file in .conkyrc .gitconfig .githelpers .Xresources .zshrc .vimrc .vim
 do
     echo "$file -> $DIR/$file"
     ln -s "$DIR/$file" .
@@ -51,4 +51,3 @@ echo
 echo "Done! Don't forget:"
 echo " - Configure your ~/.gitconfig"
 echo " - cd $DIR && git submodule init && git submodule update"
-echo " - You're using neovim now - you can throw vim away"
