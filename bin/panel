@@ -207,13 +207,15 @@ end
 class Panel
     def initialize(monitor)
         @height = `bspc config -m "#{monitor.name}" bottom_padding`.to_i
+        @clickable_areas = 20
 
         @monitor_name = monitor.name
         @bar = open "|lemonbar -g #{monitor.geometry.width}x#{@height}+#{monitor.geometry.left}" +
                                 "+#{monitor.geometry.height - @height}" +
                              " -f '-misc-tamsyn-medium-r-normal--14-101-100-100-c-70-iso8859-1'" +
                              " -f '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'" +
-                             " -B '#eb1d1f21'", 'w+'
+                             " -B '#eb1d1f21'" +
+                             " -a #{@clickable_areas}", 'w+'
 
         @bar_read_thread = Thread.new do
             @bar.each_line{ |n| system n.chomp }
@@ -321,8 +323,9 @@ class Panel
            10 => Color.red,
            30 => Color.yellow,
            50 => Color.green
+        cmd   = "gnome-control-center power"
 
-        draw_system icon, text, color
+        draw_system icon, text, color, cmd
     end
 
     def thermal
@@ -395,16 +398,18 @@ class Panel
         icon  = Icon.display
         text  = Brightness.level
         color = Color.blue
+        cmd   = "arandr"
 
-        draw_system icon, text, color
+        draw_system icon, text, color, cmd
     end
 
     def volume
         icon  = Icon.volume
         text  = Volume.percentage
         color = Color.green
+        cmd   = "gnome-control-center sound"
 
-        draw_system icon, text, color
+        draw_system icon, text, color, cmd
     end
 
     def update
@@ -464,7 +469,7 @@ class Panel
         @bar.write stuff.gsub "\n", ''
     end
 
-    def draw_system(icon, text, color = '#ffffff')
+    def draw_system(icon, text, color = '#ffffff', cmd = '')
         return if icon.nil? || text.nil?
 
         if @use_separator
@@ -473,7 +478,7 @@ class Panel
             @use_separator = true
         end
 
-        draw "#{Bar.color color}#{icon}#{' ' if text.to_s.length > 0}#{text}#{Bar.color}"
+        draw "#{Bar.color color}#{'%{A:' + cmd.to_s + ':}' if cmd.to_s.length > 0}#{icon}#{' ' if text.to_s.length > 0}#{text}#{'%{A}' if cmd.to_s.length > 0}#{Bar.color}"
     end
 end
 
@@ -669,7 +674,6 @@ module Volume
 end
 
 System.systems.each(&:update)
-
 
 panels = []
 
