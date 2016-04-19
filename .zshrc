@@ -2,14 +2,12 @@ HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=100000
 
-export PATH=~/bin:~/dotfiles/bin:$PATH
+alias lol="sleep 30"
 
-if command -v cope_path > /dev/null; then
-    export PATH=$(cope_path):$PATH
-fi
+export PATH=~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
 
 setopt appendhistory autocd notify hist_ignore_all_dups hist_ignore_space
-unsetopt extendedglob nomatch beep
+unsetopt extendedglob nomatch beep flow_control
 
 bindkey -e
 
@@ -19,26 +17,28 @@ zstyle ':completion:*' matcher-list 'm:{A-ZÄÖÜÉÈËa-zäöüéèë}={a-zäö
 autoload -Uz compinit
 compinit
 
-
 stty stop '' -ixon -ixoff
 
+# Unbind C-s
+bindkey -r "^S"
 
 test "$TERM" = "xterm" && export TERM=xterm-256color
 test "$TERM" = "screen" && export TERM=screen-256color
 
-export EDITOR=/usr/bin/nvim
+export EDITOR=/usr/bin/vim
 export GREP_COLOR='38;5;214;48;5;236'
 
-bindkey '\e[1;5D' emacs-backward-word
-bindkey '\e[1;5C' emacs-forward-word
-bindkey '\eOd' emacs-backward-word
-bindkey '\eOc' emacs-forward-word
-bindkey '\e[H' beginning-of-line
-bindkey '\e[F' end-of-line
-bindkey '\e[7~' beginning-of-line
-bindkey '\e[8~' end-of-line
-bindkey '\e[3~' delete-char
+#bindkey '\e[1;5D' emacs-backward-word
+#bindkey '\e[1;5C' emacs-forward-word
+#bindkey '\eOd' emacs-backward-word
+#bindkey '\eOc' emacs-forward-word
+#bindkey '\e[H' beginning-of-line
+#bindkey '\e[F' end-of-line
+#bindkey '\e[7~' beginning-of-line
+#bindkey '\e[8~' end-of-line
+#bindkey '\e[3~' delete-char
 
+alias fucking='sudo '
 
 if command -v pacaur > /dev/null; then
     alias get='pacaur -S'
@@ -57,13 +57,6 @@ else
     alias purge='sudo apt-get purge'
 fi
 
-alias nv="ssh nv" # 6 characters is too much!
-
-function startblog()
-{
-    nv -tL 3000:localhost:3000 'cd blog && rails s'
-}
-
 function ll()
 {
     if test \( "$PWD" = "$HOME" -a $# = 0 \) -o "$1" = ~; then
@@ -78,11 +71,6 @@ function downloads()
 {
     cd ~/downloads/
     ls -hAlt --color=always | head -n 11 | tail | tac
-}
-
-function fs()
-{
-    printf '\x1b]710;%s%d\x07' 'xft:Droid Sans Mono:size=' "$1"
 }
 
 
@@ -118,21 +106,17 @@ local return_code="%(?..%{$fg[red]%}%? ↵ %{$reset_color%})"
 local user_host='%{$fg[green]%}%n@%m%{$reset_color%}'
 local current_dir='%{$fg[blue]%}%~%{$reset_color%}'
 
-PROMPT='$(zsh_prompt)'
-RPROMPT="%(?..%{$fg[red]%}%? ! %{$reset_color%})%{$fg_bold[black]%}$(hostname)  %T%{$reset_color%}"
+local git_branch='$(git_prompt_info)%{$reset_color%}'
 
+
+PROMPT='$(zsh_prompt)'
+RPROMPT="%(?..%{$fg[red]%}%? ! %{$reset_color%})%{$fg_bold[blue]%}$(hostname)  %T%{$reset_color%}"
 
 function zsh_prompt()
 {
-    window_title="${USER}@$(hostname): ${PWD}"
+    echo -en '%{\a%}'
 
     local ref=$(git symbolic-ref HEAD 2> /dev/null)
-    local attached=true
-    if [[ -z "$ref" ]]; then
-        ref=$(git rev-parse --short HEAD 2> /dev/null)
-        attached=false
-    fi
-
     if [[ -n "$ref" ]]; then
 
         local repo="$(git rev-parse --show-toplevel)"
@@ -142,9 +126,7 @@ function zsh_prompt()
             cwd=$cwd/
         fi
 
-        if [[ "$attached" = false ]]; then
-            echo -n "%{$fg[red]%}"
-        elif [[ "$(git status 2> /dev/null | tail -n1)" != "nothing to commit, working directory clean" ]]; then
+        if [[ "$(git status 2> /dev/null | tail -n1)" != "nothing to commit, working directory clean" ]]; then
             echo -n "%{$fg[yellow]%}"
         else
             echo -n "%{$fg[green]%}"
@@ -152,7 +134,6 @@ function zsh_prompt()
 
         # Repository name @ branch
         echo -n "[${ref#refs/heads/}] $(basename "$repo")"
-        window_title="${window_title} [${ref#refs/heads/}]"
 
         # Internal path (relative to repository root)
         echo -n "%{$fg[blue]%}${cwd#$repo}"
@@ -166,16 +147,23 @@ function zsh_prompt()
 
     # Shell $ prompt sign
     echo -n " %{$reset_color%}$ "
-
-    # Bell and window title set
-    echo -n "%{\a\e]0;$window_title\a%}"
 }
 
-function preexec()
+#alias homestead='function __homestead() { (cd ~/Homestead && vagrant $*); unset -f __homestead; }; __homestead'
+
+function git_prompt_info()
 {
-    cmd=$(echo "$2" | tr -d '\000-\037')
-    echo -n "\e]0;${USER}@$(hostname): ${PWD} $ $cmd\a"
+    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
+    if [[ $((git status 2> /dev/null) | tail -n1) != "nothing to commit, working directory clean" ]]; then
+        echo -n "%{$fg[yellow]%}"
+    else
+        echo -n "%{$fg[green]%}"
+    fi
+    echo " [${ref#refs/heads/}]%{$reset_color%}"
 }
 
+function homestead() {
+    (cd ~/Homestead && vagrant $*)
+}
 
 source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
