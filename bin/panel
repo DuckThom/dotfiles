@@ -320,10 +320,10 @@ class Panel
         else
             icon  = Util.threshold value,
                 0 => Icon.battery_critical,
-                25 => Icon.battery_quarter,
-                50 => Icon.battery_half,
-                75 => Icon.battery_three_quarters,
-                95 => Icon.battery_full
+                20 => Icon.battery_quarter,
+                40 => Icon.battery_half,
+                60 => Icon.battery_three_quarters,
+                80 => Icon.battery_full
         end
 
         text  = "#{value}%"
@@ -660,7 +660,7 @@ module Brightness
     include System
 
     @last_update = 0
-    @update_interval = 1
+    @update_interval = 0.1
 
     system_reader :level
 
@@ -675,7 +675,7 @@ module Volume
     include System
 
     @last_update = 0
-    @update_interval = 1
+    @update_interval = 0.1
 
     system_reader :percentage
 
@@ -696,7 +696,7 @@ end
 threads = []
 
 # Update panels every second
-threads << Thread.new{ loop{ panels.each(&:update); sleep 1 } }
+threads << Thread.new{ loop{ panels.each(&:update); sleep 0.1 } }
 
 # Update panels on desktop switch
 threads << Thread.new do
@@ -705,6 +705,6 @@ threads << Thread.new do
 end
 
 # Update systems whenever needed
-threads << Thread.new{ loop{ System.systems.each(&:update_if_needed); sleep 1 } }
+threads << Thread.new{ loop{ System.systems.each(&:update_if_needed); sleep 0.1 } }
 
 sleep
