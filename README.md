@@ -23,8 +23,9 @@ The following packages and st00fs are required/recommended (might've missed some
 - vim // Or neovim
 - neovim // Or vim
 - tamsyn-font
+- ttf-font-awesome
 - acpi
-- lemonbar
+- lemonbar // Needs xft support: ie. 'lemonbar-xft-git' from the AUR
 - vnstat
 ```
 ___
