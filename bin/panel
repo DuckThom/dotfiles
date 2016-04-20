@@ -215,12 +215,11 @@ class Panel
         @monitor_name = monitor.name
         @bar = open "|lemonbar -g #{monitor.geometry.width}x#{@height}+#{monitor.geometry.left}" +
                                 "+#{monitor.geometry.height - @height}" +
-                             "#{" -f '-misc-tamsyn-medium-r-normal--20-145-100-100-c-100-iso8859-1'" if @hidpi }" +
-                             "#{" -f '-misc-tamsyn-medium-r-normal--14-101-100-100-c-70-iso8859-1'" unless @hidpi }" +
+                             " -f 'xft:Droid Sans Mono:size=8'" +
+                             #"#{" -f '-misc-tamsyn-medium-r-normal--14-101-100-100-c-70-iso8859-1'" unless @hidpi }" +
                              #"#{" -f '-wuncon-siji-medium-r-normal--17-120-100-100-c-*-iso10646-1'" if @hidpi }" +
                              #"#{" -f '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'" unless @hidpi }" +
-                             "#{" -f FontAwesome-10" unless @hidpi}" +
-                             "#{" -f FontAwesome-15" if @hidpi}" +
+                             " -f FontAwesome-10" +
                              " -B '#eb1d1f21'" +
                              " -a #{@clickable_areas}", 'w+'
 
@@ -240,7 +239,9 @@ class Panel
     end
 
     def separator
-        draw " #{Icon.separator} "
+        space 2
+        draw Icon.separator
+        space 2
     end
 
     def align(where)
@@ -435,7 +436,8 @@ class Panel
 
         show_now_playing = monitor.secondary? || !Monitor.secondary?
 
-        draw "#{Icon.moon} "
+        draw "%{A:lock:}#{Icon.moon} %{A}"
+        space 1
         desktops
         space 1
         active_window_title(show_now_playing)
