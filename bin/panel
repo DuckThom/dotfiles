@@ -6,25 +6,27 @@ Thread.abort_on_exception = true
 Object.send :remove_const, :Monitor # I'll need this tyvm
 
 module Icon
-    { "\ue00b" => :bluetooth,
-      "\ue015" => :clock,
-      "\ue09f" => :display,
-      "\ue01b" => :thermal,
-      "\ue026" => :load,
-      "\ue028" => :memory,
-      "\ue02e" => :information,
-      "\ue060" => :net_up,
-      "\ue061" => :net_down,
-      "\ue0fd" => :music,
-      "\ue05d" => :volume,
-      "\ue214" => :battery_high,
-      "\ue213" => :battery_medium,
-      "\ue212" => :battery_low,
-      "\ue211" => :battery_critical,
-      "\ue215" => :battery_charging,
-      "\ue277" => :desktop_occupied,
-      "\ue278" => :desktop_free,
-      "\ue279" => :separator }
+    { "\uf294" => :bluetooth,
+      "\uf017" => :clock,
+      "\uf108" => :display,
+      "\uf06d" => :thermal,
+      "\uf085" => :load,
+      "\uf0e4" => :memory,
+      "\uf129" => :information,
+      "\uf0aa" => :net_up,
+      "\uf0ab" => :net_down,
+      "\uf001" => :music,
+      "\uf027" => :volume,
+      "\uf240" => :battery_full,
+      "\uf241" => :battery_three_quarters,
+      "\uf242" => :battery_half,
+      "\uf243" => :battery_quarter,
+      "\uf244" => :battery_critical,
+      "\uf0e7" => :battery_charging,
+      "\uf0c8" => :desktop_occupied,
+      "\uf096" => :desktop_free,
+      "\uf186" => :moon,
+      "\uf105" => :separator }
     .each_pair do |char, name|
         define_singleton_method(name) { char }
     end
@@ -207,13 +209,18 @@ end
 class Panel
     def initialize(monitor)
         @height = `bspc config -m "#{monitor.name}" bottom_padding`.to_i
+        @hidpi = @height == 25 ? false : true
         @clickable_areas = 20
 
         @monitor_name = monitor.name
         @bar = open "|lemonbar -g #{monitor.geometry.width}x#{@height}+#{monitor.geometry.left}" +
                                 "+#{monitor.geometry.height - @height}" +
-                             " -f '-misc-tamsyn-medium-r-normal--14-101-100-100-c-70-iso8859-1'" +
-                             " -f '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'" +
+                             "#{" -f '-misc-tamsyn-medium-r-normal--20-145-100-100-c-100-iso8859-1'" if @hidpi }" +
+                             "#{" -f '-misc-tamsyn-medium-r-normal--14-101-100-100-c-70-iso8859-1'" unless @hidpi }" +
+                             #"#{" -f '-wuncon-siji-medium-r-normal--17-120-100-100-c-*-iso10646-1'" if @hidpi }" +
+                             #"#{" -f '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'" unless @hidpi }" +
+                             "#{" -f FontAwesome-10" unless @hidpi}" +
+                             "#{" -f FontAwesome-15" if @hidpi}" +
                              " -B '#eb1d1f21'" +
                              " -a #{@clickable_areas}", 'w+'
 
@@ -233,7 +240,7 @@ class Panel
     end
 
     def separator
-        draw " \ue279 "
+        draw " #{Icon.separator} "
     end
 
     def align(where)
@@ -312,9 +319,10 @@ class Panel
         else
             icon  = Util.threshold value,
                 0 => Icon.battery_critical,
-                10 => Icon.battery_low,
-                30 => Icon.battery_medium,
-                60 => Icon.battery_high
+                25 => Icon.battery_quarter,
+                50 => Icon.battery_half,
+                75 => Icon.battery_three_quarters,
+                95 => Icon.battery_full
         end
 
         text  = "#{value}%"
@@ -427,6 +435,7 @@ class Panel
 
         show_now_playing = monitor.secondary? || !Monitor.secondary?
 
+        draw "#{Icon.moon} "
         desktops
         space 1
         active_window_title(show_now_playing)
