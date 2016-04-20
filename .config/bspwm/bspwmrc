@@ -23,7 +23,14 @@ source ~/.xenv
 
 bspc config border_width        0
 bspc config window_gap          0
-bspc config bottom_padding     25
+
+# Set $hidpi in ~/.xenv
+# > export hidpi=false
+if [[ "$hidpi" == "true" ]]; then
+    bspc config bottom_padding  50
+else
+    bspc config bottom_padding  25
+fi
 
 bspc config focused_border_color '#4d4f51'
 bspc config active_border_color  '#242628'
@@ -50,6 +57,7 @@ bspc rule -a mplayer  state=floating
 bspc rule -a mplayer2 state=floating
 bspc rule -a mpv      state=floating
 bspc rule -a feh      state=floating
+bspc rule -a arandr   state=floating
 
 # Define more rules in ~/.xenv - for example:
 # > bspc config -d 1-2 window_gap 0
