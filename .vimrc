@@ -19,8 +19,10 @@ set smartcase                              " Ignore case if search pattern is al
 set visualbell                             " Don't beep
 set noerrorbells                           " Don't beep
 set autowrite                              " Save on buffer switch
-"set timeout timeoutlen=200 ttimeoutlen=100
+set timeout
 
+set timeoutlen=200
+set ttimeoutlen=100
 set t_Co=256                               " 256 Colors
 set t_ut=                                  " Fix missing background in tmux vim session
 set go-=L                                  " Removes left hand scroll bar
