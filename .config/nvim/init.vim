@@ -90,6 +90,7 @@ set wildchar=<Tab>
 set wildmode=longest,list
 set winminwidth=20
 set winwidth=80
+set shortmess+=I
 
 " Indentation
 set autoindent
