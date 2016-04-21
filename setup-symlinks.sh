@@ -38,7 +38,7 @@ do
     ln -s "../$DIR/.config/$file" ".config/"
 done 2>/tmp/.dark-dotfiles-setup-script.log
 
-for file in .conkyrc .gitconfig .githelpers .Xresources .zshrc .vimrc .vim
+for file in .conkyrc .gitconfig .githelpers .Xresources .zshrc .vimrc .vim .tmux.conf
 do
     echo "$file -> $DIR/$file"
     ln -s "$DIR/$file" .
