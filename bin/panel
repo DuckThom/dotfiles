@@ -351,8 +351,9 @@ class Panel
          high => Color.yellow,
          max  => Color.red,
          crit => Color.blink(:red, :white)
+        cmd   = "notify-send \"$(sensors)\""
 
-        draw_system icon, text, color
+        draw_system icon, text, color, cmd
     end
 
     def net_down
