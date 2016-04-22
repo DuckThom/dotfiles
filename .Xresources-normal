@@ -1,5 +1,4 @@
 ! Xft settings
-!Xft.dpi:        182
 Xft.dpi:        96
 Xft.antialias:  true
 Xft.lcdfilter:  lcddefault
@@ -165,7 +164,7 @@ URxvt.keysym.M-s:           perl:keyboard-select:search
   URxvt.saveLines: 4096
 
 ! Internal border of number pixels. This resource is limited to 100; option -b.
-  URxvt.internalBorder: 10
+  URxvt.internalBorder: 2
 
 ! External border of number pixels. This resource is limited to 100; option -w, -bw, -borderwidth.
 ! URxvt.externalBorder: number
