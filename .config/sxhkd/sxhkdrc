@@ -70,11 +70,8 @@ super + Escape
 XF86Audio{Lower,Raise}Volume
     volume {down,up}
 
-Print
-    screentool -s -u novaember
-
-ctrl + Print
-    screentool -S -u novaember
+super + ctrl + s
+    screencapture
 
 Pause
     xdotool mousemove_relative 0 9999
