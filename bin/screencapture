@@ -8,7 +8,7 @@ if [[ "$CALYPSO_API_KEY" == "" ]]; then
 fi
 
 # Make a screenshot and continue only if it succeeded
-maim -s -b 1 -p -1 -c 0.2,0.4,0.8,1 /tmp/screenshot.png &&
+maim --nokeyboard -s -b 1 -p -1 -c 0.2,0.4,0.8,1 /tmp/screenshot.png &&
 
 # Upload the screenshot
 curl -s -F image=@"/tmp/screenshot.png" -F key="$CALYPSO_API_KEY" https://lunamoonfang.nl/api/upload | jsawk 'return this.url' | xclip -selection clipboard &&
