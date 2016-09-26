@@ -28,5 +28,7 @@ The following packages and st00fs are required/recommended (might've missed some
 - lemonbar // Needs xft support: ie. 'lemonbar-xft-git' from the AUR
 - vnstat
 - pip3: powerline-status
+- cairo-compmgr
+- dunst
+- feh
 ```
-___
