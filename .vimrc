@@ -1,7 +1,7 @@
 " Enable Powerline
-python from powerline.vim import setup as powerline_setup
-python powerline_setup()
-python del powerline_setup
+python3 from powerline.vim import setup as powerline_setup
+python3 powerline_setup()
+python3 del powerline_setup
 
 """""""""""""""""""
 "" Settings
@@ -46,9 +46,7 @@ set updatetime=250
 " Indenting
 set tabstop=4
 set shiftwidth=4
-
 set expandtab
-set autoindent
 
 " Enable automatic plugin loading from ~/.vim/bundle
 execute pathogen#infect()
