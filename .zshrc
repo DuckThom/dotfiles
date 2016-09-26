@@ -2,43 +2,72 @@ HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=100000
 
-alias lol="sleep 30"
+# Path to your oh-my-zsh installation.
+export ZSH=/home/luna/.oh-my-zsh
 
-export PATH=~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
+# Set name of the theme to load.
+# Look in ~/.oh-my-zsh/themes/
+# Optionally, if you set this to "random", it'll load a random theme each
+# time that oh-my-zsh is loaded.
+ZSH_THEME="ys"
 
-setopt appendhistory autocd notify hist_ignore_all_dups hist_ignore_space
-unsetopt extendedglob nomatch beep flow_control
+# Uncomment the following line to use case-sensitive completion.
+# CASE_SENSITIVE="true"
 
-bindkey -e
+# Uncomment the following line to use hyphen-insensitive completion. Case
+# sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
 
-zstyle :compinstall filename ~/.zshrc
-zstyle ':completion:*' matcher-list 'm:{A-ZÄÖÜÉÈËa-zäöüéèë}={a-zäöüéèëA-ZÄÖÜÉÈË} m:[-_.]=[-_.] r:|[-_.]=** r:|=*' '+l:|=*'
+# Uncomment the following line to disable bi-weekly auto-update checks.
+# DISABLE_AUTO_UPDATE="true"
 
-autoload -Uz compinit
-compinit
+# Uncomment the following line to change how often to auto-update (in days).
+# export UPDATE_ZSH_DAYS=13
 
-stty stop '' -ixon -ixoff
+# Uncomment the following line to disable colors in ls.
+# DISABLE_LS_COLORS="true"
 
-# Unbind C-s
-bindkey -r "^S"
+# Uncomment the following line to disable auto-setting terminal title.
+# DISABLE_AUTO_TITLE="true"
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line to display red dots whilst waiting for completion.
+# COMPLETION_WAITING_DOTS="true"
+
+# Uncomment the following line if you want to disable marking untracked files
+# under VCS as dirty. This makes repository status check for large repositories
+# much, much faster.
+# DISABLE_UNTRACKED_FILES_DIRTY="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# The optional three formats: "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# HIST_STAMPS="mm/dd/yyyy"
+
+# Would you like to use another custom folder than $ZSH/custom?
+# ZSH_CUSTOM=/path/to/new-custom-folder
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+# Custom plugins may be added to ~/.oh-my-zsh/custom/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git)
+
+source $ZSH/oh-my-zsh.sh
 
 test "$TERM" = "xterm" && export TERM=xterm-256color
 test "$TERM" = "screen" && export TERM=screen-256color
+# You may need to manually set your language environment
+export LANG=en_US.UTF-8
 
 export EDITOR=/usr/bin/vim
-export GREP_COLOR='38;5;214;48;5;236'
+export PATH=~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
+export _JAVA_AWT_WM_NON_REPARENTING=1
 
-#bindkey '\e[1;5D' emacs-backward-word
-#bindkey '\e[1;5C' emacs-forward-word
-#bindkey '\eOd' emacs-backward-word
-#bindkey '\eOc' emacs-forward-word
-#bindkey '\e[H' beginning-of-line
-#bindkey '\e[F' end-of-line
-#bindkey '\e[7~' beginning-of-line
-#bindkey '\e[8~' end-of-line
-#bindkey '\e[3~' delete-char
-
-alias fucking='sudo '
+# Unbind C-s
+bindkey -r "^S"
 
 if command -v pacaur > /dev/null; then
     alias get='pacaur -S'
@@ -56,23 +85,6 @@ else
     alias remove='sudo apt-get remove'
     alias purge='sudo apt-get purge'
 fi
-
-function ll()
-{
-    if test \( "$PWD" = "$HOME" -a $# = 0 \) -o "$1" = ~; then
-        ls -hlF --color=auto --group-directories-first $argv
-        return
-    fi
-
-    ls -halF --color=auto --group-directories-first $argv
-}
-
-function downloads()
-{
-    cd ~/downloads/
-    ls -hAlt --color=always | head -n 11 | tail | tac
-}
-
 
 if test "$TERM" = "linux"; then
     echo -en "\e]P01D1F21" # black
@@ -93,77 +105,5 @@ if test "$TERM" = "linux"; then
     echo -en "\e]PFdddddd" # white
     clear # for background artifacting
 fi
-
-
-setopt prompt_subst
-setopt promptsubst
-setopt promptpercent
-
-autoload colors; colors;
-
-local return_code="%(?..%{$fg[red]%}%? ↵ %{$reset_color%})"
-
-local user_host='%{$fg[green]%}%n@%m%{$reset_color%}'
-local current_dir='%{$fg[blue]%}%~%{$reset_color%}'
-
-local git_branch='$(git_prompt_info)%{$reset_color%}'
-
-
-PROMPT='$(zsh_prompt)'
-RPROMPT="%(?..%{$fg[red]%}%? ! %{$reset_color%})%{$fg_bold[blue]%}$(hostname)  %T%{$reset_color%}"
-
-function zsh_prompt()
-{
-    echo -en '%{\a%}'
-
-    local ref=$(git symbolic-ref HEAD 2> /dev/null)
-    if [[ -n "$ref" ]]; then
-
-        local repo="$(git rev-parse --show-toplevel)"
-        local cwd="$(pwd)"
-
-        if [[ "$repo" = "$cwd" ]]; then
-            cwd=$cwd/
-        fi
-
-        if [[ "$(git status 2> /dev/null | tail -n1)" != "nothing to commit, working directory clean" ]]; then
-            echo -n "%{$fg[yellow]%}"
-        else
-            echo -n "%{$fg[green]%}"
-        fi
-
-        # Repository name @ branch
-        echo -n "[${ref#refs/heads/}] $(basename "$repo")"
-
-        # Internal path (relative to repository root)
-        echo -n "%{$fg[blue]%}${cwd#$repo}"
-
-    else
-
-        # Current working directory
-        echo -n "%{$fg[blue]%}%~"
-
-    fi
-
-    # Shell $ prompt sign
-    echo -n " %{$reset_color%}$ "
-}
-
-#alias homestead='function __homestead() { (cd ~/Homestead && vagrant $*); unset -f __homestead; }; __homestead'
-
-function git_prompt_info()
-{
-    ref=$(git symbolic-ref HEAD 2> /dev/null) || return
-    if [[ $((git status 2> /dev/null) | tail -n1) != "nothing to commit, working directory clean" ]]; then
-        echo -n "%{$fg[yellow]%}"
-    else
-        echo -n "%{$fg[green]%}"
-    fi
-    echo " [${ref#refs/heads/}]%{$reset_color%}"
-}
-
-function homestead() {
-    (cd ~/Homestead && vagrant $*)
-}
 
 source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
