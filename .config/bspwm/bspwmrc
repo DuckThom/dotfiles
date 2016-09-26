@@ -5,10 +5,10 @@ source ~/.zshenv
 
 
 # Configure X environment
-xrdb ~/.Xresources
+xrdb ~/.Xresources-normal
 urxvtd -f -o
 
-compton --dbus &
+cairo-compmgr &
 xsetroot -cursor_name left_ptr &
 xset +fp /usr/share/fonts/local/ &
 xset +fp ~/.fonts &
@@ -27,9 +27,9 @@ bspc config window_gap          0
 # Set $hidpi in ~/.xenv
 # > export hidpi=false
 if [[ "$hidpi" == "true" ]]; then
-    bspc config bottom_padding  50
+    bspc config top_padding  50
 else
-    bspc config bottom_padding  25
+    bspc config top_padding  25
 fi
 
 bspc config focused_border_color '#4d4f51'
