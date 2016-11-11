@@ -537,7 +537,7 @@ module Battery
     end
 
     def self.charging?
-        `acpi -a 2>/dev/null`['off-line'].nil?
+        `acpi -b 2>/dev/null`['Discharging'].nil?
     end
 end
 
