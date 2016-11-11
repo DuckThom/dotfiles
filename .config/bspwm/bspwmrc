@@ -3,12 +3,11 @@
 # Set path etc.
 source ~/.zshenv
 
-
 # Configure X environment
 xrdb ~/.Xresources-normal
 urxvtd -f -o
 
-cairo-compmgr &
+compton -b &
 xsetroot -cursor_name left_ptr &
 xset +fp /usr/share/fonts/local/ &
 xset +fp ~/.fonts &
@@ -17,6 +16,7 @@ panel &
 kb &
 dunst &
 sxhkd &
+libinput-gestures-setup start &
 
 # Run local .xenv
 source ~/.xenv
