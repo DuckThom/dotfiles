@@ -79,22 +79,7 @@ Pause
 ctrl + Pause
     wp
 
-Scroll_Lock
-    charinfo
-
-ctrl + Scroll_Lock
-    clipswap
-
-alt + Scroll_Lock
-    nvpaste
-
-ctrl + shift + Scroll_Lock
-    pastetype
-
-super + p
-    music pick 5
-
-alt + super + space
+control + alt + l
     lock
 
 super + n
@@ -108,3 +93,6 @@ super + ctrl + o
 
 super + ctrl + {Up,Down}
     change_brightness {up,down}
+
+XF86MonBrightness{Up,Down}
+    light -{A,U} 10
