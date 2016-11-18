@@ -63,7 +63,7 @@ test "$TERM" = "screen" && export TERM=screen-256color
 export LANG=en_US.UTF-8
 
 export EDITOR=/usr/bin/vim
-export PATH=~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
+export PATH=node_modules/.bin:vendor/bin:~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
 export _JAVA_AWT_WM_NON_REPARENTING=1
 
 # Unbind C-s
