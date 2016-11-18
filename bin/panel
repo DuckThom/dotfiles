@@ -217,7 +217,7 @@ class Panel
         @bar = open "|lemonbar -g #{monitor.geometry.width}x#{@height*@scale}+#{monitor.geometry.left}+0" +
                              " -f 'xft:Droid Sans Mono:size=#{8*@scale}'" +
                              " -f FontAwesome-#{10*@scale}" +
-                             " -B '#eb1d1f21'" +
+                             " -B '#eb002b36'" +
                              " -a #{@clickable_areas}", 'w+'
 
         @bar_read_thread = Thread.new do
