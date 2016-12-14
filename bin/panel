@@ -208,19 +208,16 @@ end
 
 class Panel
     def initialize(monitor)
-        @height = `bspc config -m "#{monitor.name}" bottom_padding`.to_i
-        @hidpi = @height == 25 ? false : true
+        @height = 25
+        @scale = monitor.geometry.width > 2560 ? 2 : 1
+        `bspc config -m "#{monitor.name}" top_padding #{@height*@scale}`
         @clickable_areas = 20
 
         @monitor_name = monitor.name
-        @bar = open "|lemonbar -g #{monitor.geometry.width}x#{@height}+#{monitor.geometry.left}" +
-                                "+#{monitor.geometry.height - @height}" +
-                             " -f 'xft:Droid Sans Mono:size=8'" +
-                             #"#{" -f '-misc-tamsyn-medium-r-normal--14-101-100-100-c-70-iso8859-1'" unless @hidpi }" +
-                             #"#{" -f '-wuncon-siji-medium-r-normal--17-120-100-100-c-*-iso10646-1'" if @hidpi }" +
-                             #"#{" -f '-wuncon-siji-medium-r-normal--10-100-75-75-c-80-iso10646-1'" unless @hidpi }" +
-                             " -f FontAwesome-10" +
-                             " -B '#eb1d1f21'" +
+        @bar = open "|lemonbar -g #{monitor.geometry.width}x#{@height*@scale}+#{monitor.geometry.left}+0" +
+                             " -f 'Oxygen Mono:size=#{8*@scale}'" +
+                             " -f FontAwesome-#{10*@scale}" +
+                             " -B '#eb002b36'" +
                              " -a #{@clickable_areas}", 'w+'
 
         @bar_read_thread = Thread.new do
@@ -239,9 +236,9 @@ class Panel
     end
 
     def separator
-        space 2
+        space 1
         draw Icon.separator
-        space 2
+        space 1
     end
 
     def align(where)
@@ -435,22 +432,11 @@ class Panel
         draw '%{B-}'
         space 2
 
-        show_now_playing = monitor.secondary? || !Monitor.secondary?
-
         draw "%{A:lock:}#{Icon.moon} %{A}"
         space 1
         desktops
         space 1
-        active_window_title(show_now_playing)
-
-        if show_now_playing
-            align :center
-            space 10
-
-            now_playing
-
-            space 10
-        end
+        active_window_title()
 
         align :right
         space 20
@@ -468,7 +454,7 @@ class Panel
             battery
         end
 
-        time(monitor.primary? && Monitor.secondary?)
+        time(true)
 
         space 2
         @bar.write "\n"
@@ -540,7 +526,7 @@ module Battery
     end
 
     def self.charging?
-        `acpi -a 2>/dev/null`['off-line'].nil?
+        `acpi -b 2>/dev/null`['Discharging'].nil?
     end
 end
 
@@ -577,7 +563,7 @@ module Network
 
     def self.update
         Thread.new(self) do |net|
-            net.parse_vnstat `vnstat -tr 5 -ru -i wlp3s0`
+            net.parse_vnstat `vnstat -tr 5 -ru -i br0`
         end
     end
 

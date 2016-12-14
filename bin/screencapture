@@ -3,7 +3,7 @@
 set -e
 
 if [[ "$CALYPSO_API_KEY" == "" ]]; then
-    echo "API Key not set, please set it in .xenv"
+    notify-send "API Key not set, please set it in .xenv"
     exit 1;
 fi
 
@@ -11,7 +11,7 @@ fi
 maim --nokeyboard -s -b 1 -p -1 -c 0.2,0.4,0.8,1 /tmp/screenshot.png &&
 
 # Upload the screenshot
-curl -s -F image=@"/tmp/screenshot.png" -F key="$CALYPSO_API_KEY" https://lunamoonfang.nl/api/upload | jsawk 'return this.url' | xclip -selection clipboard &&
+curl -s -F image=@"/tmp/screenshot.png" -F key="$CALYPSO_API_KEY" https://lunamoonfang.nl/api/upload | jsawk 'return this.payload.url' | xclip -selection clipboard &&
 
 # Remove the local copy
 rm /tmp/screenshot.png &&

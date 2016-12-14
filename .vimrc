@@ -52,9 +52,7 @@ set updatetime=250
 " Indenting
 set tabstop=4
 set shiftwidth=4
-
 set expandtab
-set autoindent
 
 " Enable automatic plugin loading from ~/.vim/bundle
 execute pathogen#infect()

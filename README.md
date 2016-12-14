@@ -5,9 +5,7 @@ NOTHING WORKS
 
 EVERYTHING IS BROKEN
 
-DON'T YELL AT ME IN #NOVAEMBER ON FREENODE
-
-YELL AT [DARKWATER](https://github.com/Darkwater) INSTEAD!
+STOP YELLING AT ME
 ___
 ##  # Requirements
 
@@ -28,5 +26,8 @@ The following packages and st00fs are required/recommended (might've missed some
 - lemonbar // Needs xft support: ie. 'lemonbar-xft-git' from the AUR
 - vnstat
 - pip3: powerline-status
+- compton
+- dunst
+- feh
+- libinput-gestures
 ```
-___

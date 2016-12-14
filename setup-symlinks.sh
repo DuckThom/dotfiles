@@ -38,14 +38,14 @@ do
     ln -s "../$DIR/.config/$file" ".config/"
 done 2>/tmp/.dark-dotfiles-setup-script.log
 
-for file in .conkyrc .gitconfig .githelpers .Xresources-normal .Xresources-hidpi .zshrc .vimrc .vim .tmux.conf
+for file in .conkyrc .gitconfig .githelpers .Xresources-normal .Xresources-hidpi .zshrc .vimrc .vim .tmux.conf .libinput-gestures.conf
 do
     echo "$file -> $DIR/$file"
     ln -s "$DIR/$file" .
-done 2>>/tmp/.dark-dotfiles-setup-script.log
+done 2>>/tmp/.luna-dotfiles-setup-script.log
 
 echo
-cat /tmp/.dark-dotfiles-setup-script.log
+cat /tmp/.luna-dotfiles-setup-script.log
 echo
 
 echo "Done! Don't forget:"
