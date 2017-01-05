@@ -53,7 +53,9 @@ execute pathogen#infect()
 
 " Enable syntax highlighting
 syntax on
-colorscheme xoria256
+set background=dark
+colorscheme solarized
+hi Normal guibg=NONE ctermbg=NONE
 
 " Split window navigation
 map <silent> j :tabprevious<cr>
