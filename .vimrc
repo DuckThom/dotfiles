@@ -1,12 +1,12 @@
 " Enable Powerline
-if has('python')
-    python from powerline.vim import setup as powerline_setup
-    python powerline_setup()
-    python del powerline_setup
-elseif has('python3')
+if has('python3')
     python3 from powerline.vim import setup as powerline_setup
     python3 powerline_setup()
     python3 del powerline_setup
+elseif has('python')
+    python from powerline.vim import setup as powerline_setup
+    python powerline_setup()
+    python del powerline_setup
 endif
 
 """""""""""""""""""
