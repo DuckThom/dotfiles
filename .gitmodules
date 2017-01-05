@@ -25,3 +25,7 @@
 [submodule ".vim/bundle/vim-ansible-yaml"]
     path = .vim/bundle/vim-ansible-yaml
 	url = https://github.com/tchase/vim-ansible-yaml.git
+
+[submodule ".vim/bundle/vim-colors-solarized"]
+	path = .vim/bundle/vim-colors-solarized
+	url = https://github.com/altercation/vim-colors-solarized.git
