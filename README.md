@@ -25,9 +25,10 @@ The following packages and st00fs are required/recommended (might've missed some
 - acpi
 - lemonbar // Needs xft support: ie. 'lemonbar-xft-git' from the AUR
 - vnstat
-- pip3: powerline-status
+- pip3 or pip: powerline-status
 - compton
 - dunst
 - feh
 - libinput-gestures
+- ttf-dejavu-sans-mono-for-powerline-git
 ```
