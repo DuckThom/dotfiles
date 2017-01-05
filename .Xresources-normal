@@ -68,7 +68,7 @@ Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintslight
 
-URxvt.font: xft:Droid Sans Mono for Powerline:size=10
+URxvt.font: xft:DejaVu Sans Mono for Powerline:size=10
 URxvt.letterSpace: -1
 
 URxvt.depth: 32
