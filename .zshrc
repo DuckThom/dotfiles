@@ -117,4 +117,6 @@ if test "$TERM" = "linux"; then
     clear # for background artifacting
 fi
 
+source ~/dotfiles/.zsh.aliases
+
 source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
