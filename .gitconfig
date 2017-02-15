@@ -1,6 +1,7 @@
 [user]
     name = Thomas Wiringa
-    email = thomas.wiringa@gmail.com
+    email = t.wiringa@youwe.nl
+	signingkey = A3FE46298C23BF36
 [core]
     editor = vim
 [push]
@@ -49,8 +50,10 @@
     ra = !git r --all
     l = "!. ~/.githelpers && pretty_git_log"
     la = !git l --all
+	out = fire
+    touch = commit --amend --date now
 
 [merge]
     tool = vimdiff
 [credential]
-	helper = store
+	helper = /usr/share/doc/git/contrib/credential/gnome-keyring/git-credential-gnome-keyring

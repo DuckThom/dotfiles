@@ -1,0 +1,5 @@
+#!/bin/bash
+
+curl http://loripsum.net/api/1/medium | xclip -sel clip
+
+notify-send "lipsum" "Lorem ipsum text stored in clipboard"

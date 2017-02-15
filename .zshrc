@@ -1,15 +1,26 @@
+export LC_ALL="en_US.UTF-8"
+export PATH=~/.gem/ruby/2.4.0/bin:node_modules/.bin/:vendor/bin:~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
+export ZSH=$HOME/.oh-my-zsh
+
+plugins=(git ruby)
+
+source $ZSH/oh-my-zsh.sh
+
 HISTFILE=~/.zhistory
 HISTSIZE=10000
 SAVEHIST=100000
-
-# Path to your oh-my-zsh installation.
-export ZSH=/home/luna/.oh-my-zsh
 
 # Set name of the theme to load.
 # Look in ~/.oh-my-zsh/themes/
 # Optionally, if you set this to "random", it'll load a random theme each
 # time that oh-my-zsh is loaded.
-ZSH_THEME="ys"
+ZSH_THEME="bullet-train"
+BULLETTRAIN_PROMPT_CHAR="\$ "
+BULLETTRAIN_RUBY_BG="red"
+
+alias lol="sleep 30"
+alias dexit="docker exec -it"
+
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -106,4 +117,27 @@ if test "$TERM" = "linux"; then
     clear # for background artifacting
 fi
 
-source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+setopt prompt_subst
+setopt promptsubst
+setopt promptpercent
+
+autoload colors; colors;
+
+function setup_typo3()
+{
+    # Extract the typo3 source
+    tar xvf typo3*.tar.gz
+
+    # Create and move into the 'html' folder
+    mkdir html && cd html
+
+    # Create the required links
+    ln -s ../typo3_src-* typo3_src
+    ln -s typo3_src/index.php
+    ln -s typo3_src/typo3
+
+    # Copy the .htaccess
+    cp typo3_src/_.htaccess .htaccess
+}
+
+source $HOME/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
