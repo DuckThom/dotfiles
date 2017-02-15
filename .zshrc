@@ -74,7 +74,7 @@ test "$TERM" = "screen" && export TERM=screen-256color
 export LANG=en_US.UTF-8
 
 export EDITOR=/usr/bin/vim
-export PATH=node_modules/.bin:vendor/bin:~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
+export PATH=~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
 export _JAVA_AWT_WM_NON_REPARENTING=1
 
 # Unbind C-s
@@ -117,27 +117,4 @@ if test "$TERM" = "linux"; then
     clear # for background artifacting
 fi
 
-setopt prompt_subst
-setopt promptsubst
-setopt promptpercent
-
-autoload colors; colors;
-
-function setup_typo3()
-{
-    # Extract the typo3 source
-    tar xvf typo3*.tar.gz
-
-    # Create and move into the 'html' folder
-    mkdir html && cd html
-
-    # Create the required links
-    ln -s ../typo3_src-* typo3_src
-    ln -s typo3_src/index.php
-    ln -s typo3_src/typo3
-
-    # Copy the .htaccess
-    cp typo3_src/_.htaccess .htaccess
-}
-
-source $HOME/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
