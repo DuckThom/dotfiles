@@ -88,3 +88,7 @@ cat /tmp/.luna-dotfiles-setup-script.log
 echo
 
 echo "Done!"
+echo "Remember to change user.name and user.email in ~/.gitconfig"
+echo "Or override them by setting the env values in ~/.gitconfig.local"
+echo
+echo "For example: 'export GIT_AUTHOR_EMAIL=foo@bar.com'"
