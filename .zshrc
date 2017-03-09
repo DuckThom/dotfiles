@@ -54,4 +54,4 @@ source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 # Load pyenv
-eval "$(pyenv init -)"
+which pyenv >> /dev/null 2>&1 && eval "$(pyenv init -)"
