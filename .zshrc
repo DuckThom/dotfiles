@@ -1,17 +1,10 @@
 # Exports
 export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
-export PATH=~/.gem/ruby/2.4.0/bin:node_modules/.bin/:vendor/bin:~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$PATH
+export PATH=$PATH:~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$HOME/.rvm/bin
 export ZSH=$HOME/.oh-my-zsh
 export EDITOR=/usr/bin/vim
 export _JAVA_AWT_WM_NON_REPARENTING=1
-
-test "$TERM" = "xterm" && export TERM=xterm-256color
-test "$TERM" = "screen" && export TERM=screen-256color
-
-plugins=(git)
-
-source $ZSH/oh-my-zsh.sh
 
 HISTFILE=~/.zhistory
 HISTSIZE=10000
@@ -23,10 +16,15 @@ BULLETTRAIN_RUBY_BG="red"
 
 alias dexit="docker exec -it"
 
+plugins=(git)
+
+test "$TERM" = "xterm" && export TERM=xterm-256color
+test "$TERM" = "screen" && export TERM=screen-256color
+
 # Unbind C-s
 bindkey -r "^S"
 
-# Set some fancy colors for the framebuffer terminal
+# Set some fancy colors for the tty
 if test "$TERM" = "linux"; then
     echo -en "\e]P01D1F21" # black
     echo -en "\e]P1E84F4F" # darkred
@@ -47,11 +45,17 @@ if test "$TERM" = "linux"; then
     clear # for background artifacting
 fi
 
-# Load the aliases and helper functions
-source ~/dotfiles/.zsh.aliases
+# Load oh-my-zsh
+source $ZSH/oh-my-zsh.sh
 
 if [ -f ~/.gitconfig.local ]; then
     source ~/.gitconfig.local
 fi
 
 source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# Load RVM
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+
+# Load pyenv
+which pyenv >> /dev/null 2>&1 && eval "$(pyenv init -)"
