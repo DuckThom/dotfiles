@@ -32,7 +32,7 @@ set ttimeoutlen=100
 set t_Co=256                               " 256 Colors
 set t_ut=                                  " Fix missing background in tmux vim session
 set go-=L                                  " Removes left hand scroll bar
-set linespace=15
+set linespace=1
 set encoding=utf-8                         " Force UTF-8 encoding
 set laststatus=2                           " Display Powerline status bar
 set shortmess+=I                           " Disable welcome message
@@ -61,7 +61,7 @@ execute pathogen#infect()
 syntax on
 set background=dark
 colorscheme solarized
-hi Normal guibg=NONE ctermbg=NONE
+hi Normal ctermbg=NONE
 
 " Split window navigation
 map <silent> j :tabprevious<cr>
