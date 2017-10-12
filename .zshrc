@@ -14,8 +14,6 @@ ZSH_THEME="bullet-train"
 BULLETTRAIN_PROMPT_CHAR="\$ "
 BULLETTRAIN_RUBY_BG="red"
 
-alias dexit="docker exec -it"
-
 plugins=(git)
 
 test "$TERM" = "xterm" && export TERM=xterm-256color
@@ -51,6 +49,8 @@ source $ZSH/oh-my-zsh.sh
 if [ -f ~/.gitconfig.local ]; then
     source ~/.gitconfig.local
 fi
+
+source ~/dotfiles/.aliases
 
 source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
