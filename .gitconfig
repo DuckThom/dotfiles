@@ -3,7 +3,7 @@
     email = thomas.wiringa@gmail.com
     signingkey = 8C96C39B1BD7BEB8
 [core]
-    editor = vim
+    editor = nvim
 [push]
     default = simple
 [color]
