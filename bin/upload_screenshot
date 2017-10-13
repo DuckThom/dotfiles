@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+set -e
+
+source ~/.xenv
+
+URL="https://img.tjwiringa.nl/upload?key=$IMG_API_KEY"
+
+# Make a screenshot and continue only if it succeeded
+maim --nokeyboard -s -b 1 -p -1 -c 0.2,0.4,0.8,1 /tmp/screenshot.png &&
+
+# Upload the screenshot
+curl -s -X POST -F image=@"/tmp/screenshot.png" $URL | jsawk 'return this.message' | xclip -selection clipboard &&
+
+# Remove the local copy
+rm /tmp/screenshot.png &&
+
+# Send a notification
+notify-send "Screenshot uploaded"
+

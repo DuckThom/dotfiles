@@ -54,6 +54,8 @@ source ~/dotfiles/.aliases
 
 source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
+[[ -f "$HOME/.xenv" ]] && source "$HOME/.xenv"
+
 # Load RVM
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
