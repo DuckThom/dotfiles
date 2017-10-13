@@ -42,7 +42,7 @@ do
     ln -s "../$DIR/.config/$file" ".config/"
 done 2>/tmp/.luna-dotfiles-setup-script.log
 
-for file in .conkyrc .gitconfig .githelpers .zshrc .vimrc .vim .tmux.conf
+for file in .gitconfig .githelpers .zshrc .vimrc .vim .tmux.conf
 do
     echo "$file -> $DIR/$file"
     ln -s "$DIR/$file" .
