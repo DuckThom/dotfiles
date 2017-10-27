@@ -70,6 +70,8 @@ let g:nerdtree_tabs_open_on_console_startup = 0
 " Always focus on the file tab by default
 let g:nerdtree_tabs_smart_startup_focus = 2
 
+" Airline config
+
 " Enable powerline fonts for airline
 let g:airline_powerline_fonts = 1
 
@@ -79,7 +81,20 @@ let g:airline#extensions#tabline#enabled = 1
 " Make the Powerline very fancy
 "let g:Powerline_symbols = 'fancy'
 
-" Startify
+" Deoplete config
+
+if has('python3')
+    let g:deoplete#enable_at_startup = 1
+endif
+
+" Tagbar config
+
+autocmd VimEnter * TagbarOpen
+
+nmap <F8> :TagbarToggle<cr>
+
+" Startify config
+
 let g:startify_default_custom_header = [ '                      -`                     ',
                                        \ '                     .o+`                    ',
                                        \ '                    `ooo/                    ',
