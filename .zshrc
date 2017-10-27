@@ -1,7 +1,7 @@
 # Exports
 export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
-export PATH=$PATH:~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$HOME/.rvm/bin
+export PATH=$PATH:~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$(gem env path | sed 's/:/\/bin:/g' | sed 's/$/\/bin/')
 export ZSH=$HOME/.oh-my-zsh
 export EDITOR=/usr/bin/vim
 export _JAVA_AWT_WM_NON_REPARENTING=1
