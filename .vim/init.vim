@@ -36,7 +36,7 @@ set winminwidth=20
 set winwidth=80
 set scrolloff=5
 set pastetoggle=<F11>
-set updatetime=250
+"set updatetime=250
 
 " Indenting
 set tabstop=4
@@ -78,20 +78,29 @@ let g:airline_powerline_fonts = 1
 " Enable airline for tabs
 let g:airline#extensions#tabline#enabled = 1
 
-" Make the Powerline very fancy
-"let g:Powerline_symbols = 'fancy'
+" Syntastic configuration
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
 
-" Deoplete config
+let g:syntastic_php_checkers = ['php', 'phpmd', 'phpcs']
+let g:syntastic_phtml_checkers = ['php']
+let g:syntastic_scss_checkers = ['scss_lint']
 
-if has('python3')
-    let g:deoplete#enable_at_startup = 1
-endif
+let g:syntastic_php_phpcs_exec = '/home/luna/.composer/vendor/bin/phpcs'
+let g:syntastic_php_phpcs_args = '--standard=psr2'
+let g:syntastic_php_phpmd_exec = '/home/luna/.composer/vendor/bin/phpmd'
+let g:syntastic_php_phpmd_post_args = 'cleancode,codesize,controversial,design,unusedcode'
 
 " Tagbar config
 
 autocmd VimEnter * TagbarOpen
 
 nmap <F8> :TagbarToggle<cr>
+
+" FZF
+set rtp+=~/.fzf
 
 " Startify config
 

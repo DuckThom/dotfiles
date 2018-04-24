@@ -3,7 +3,7 @@ export LC_ALL="en_US.UTF-8"
 export LANG=en_US.UTF-8
 export PATH=$PATH:~/.npm/bin:~/.composer/vendor/bin:~/bin:~/dotfiles/bin:~/.bin:$(gem env path | sed 's/:/\/bin:/g' | sed 's/$/\/bin/')
 export ZSH=$HOME/.oh-my-zsh
-export EDITOR=/usr/bin/vim
+export EDITOR=/usr/bin/nvim
 export _JAVA_AWT_WM_NON_REPARENTING=1
 
 HISTFILE=~/.zhistory
@@ -61,3 +61,9 @@ source ~/dotfiles/zshplugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Load pyenv
 which pyenv >> /dev/null 2>&1 && eval "$(pyenv init -)"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+if [ $TILIX_ID ] || [ $VTE_VERSION ]; then
+        source /etc/profile.d/vte.sh
+fi
