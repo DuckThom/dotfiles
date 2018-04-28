@@ -1,0 +1,27 @@
+#!/bin/bash
+
+HOST="$1"
+
+if [ "$HOST" == "" ]; then
+    echo "Usage: ssh-proxy <ssh-host>"
+
+    exit 1;
+fi
+
+echo "Setting gsettings SOCKS settings..."
+
+gsettings set org.gnome.system.proxy mode 'manual'
+gsettings set org.gnome.system.proxy.socks host 'localhost'
+gsettings set org.gnome.system.proxy.socks port 12345
+
+echo "Connecting to SSH host '$HOST'"
+
+ssh -D 12345 "$HOST" 'echo "Ctrl-C to disconnect" && cat'
+
+echo "Reverting gsettings SOCKS settings..."
+
+gsettings set org.gnome.system.proxy mode 'none'
+gsettings reset org.gnome.system.proxy.socks host
+gsettings reset org.gnome.system.proxy.socks port
+
+echo "Disconnected from the SSH host and reverted the system proxy settings!"
