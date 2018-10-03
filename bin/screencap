@@ -1,24 +1,28 @@
 #!/bin/bash
 
+source ~/.xenv
+
 if [ -f /tmp/screencap.pid ]; then
+    KEY="$IMG_API_KEY"
+    URL="https://img.tjwiringa.nl/upload"
+
+    notify-send -t 2000 "Uploading screencapture" "Uploading to $URL"
+
     PID=$(</tmp/screencap.pid)
     kill -s INT $PID
     rm /tmp/screencap.pid
 
     sleep 2
 
-    notify-send "Uploading screencapture"
-
-    KEY="<api key here>"
-    URL="https://img.tjwiringa.nl/upload?key=$KEY"
-
-    curl -F image=@"/tmp/screencap.mp4" $URL | jsawk 'return this.message' | xclip -selection clipboard && rm /tmp/screencap.mp4
+    curl -F image=@"/tmp/screencap.mp4" "$URL?key=$KEY" | jsawk 'return this.message' | xclip -selection clipboard \
+        && rm /tmp/screencap.mp4 \
+        && notify-send "Screencapture uploaded" "$(xclip -selection clipboard -o)"
 else
     slop=$(slop -f "%x %y %w %h %g %i") || exit 1
 
     read -r X Y W H G ID < <(echo $slop)
 
-    ffmpeg -loglevel quiet -f x11grab -s "$W"x"$H" -i :0.0+$X,$Y /tmp/screencap.mp4 &
+    ffmpeg -loglevel error -f x11grab -s "$W"x"$H" -i $DISPLAY.0+$X,$Y /tmp/screencap.mp4 &
     PID=$!
 
     echo -n $PID > /tmp/screencap.pid
