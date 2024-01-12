@@ -1,0 +1,27 @@
+[core]
+    editor = nvim
+
+[user]
+    name = ##NAME_PLACEHOLDER##
+    email = ##EMAIL_PLACEHOLDER##
+
+[alias]
+    b = branch
+    co = checkout
+    st = status
+
+    ds = diff --staged
+    touch = commit --amend --date now
+    puoh = push -u origin HEAD
+
+[init]
+    defaultBranch = master
+
+[pull]
+	rebase = false
+
+[push]
+    default = simple
+
+[color]
+    ui = true

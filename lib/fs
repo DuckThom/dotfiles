@@ -1,0 +1,25 @@
+function check_existing_file() {
+    local file="$1"
+    local overwrite
+
+    if [ -f "$file" ]
+    then
+        echo -n "$file already exists. Overwrite? "
+
+        if [ "$force" == "1" ]
+        then
+            echo "y"
+
+            return 0
+        else
+            read -p "[y/N] " overwrite
+        fi
+
+        if [ "$overwrite" != "y" ]
+        then
+            return 1
+        fi
+    fi
+
+    return 0
+}

@@ -1,0 +1,41 @@
+function init_variables() {
+    if [ "$full_name" == "" ]
+    then
+        read -p "What is your name? " full_name
+    fi
+
+    echo
+    echo "Welcome $full_name! Nice to meet you."
+    echo
+
+    if [ "$email" == "" ]
+    then
+        read -p "What is your email address? " email
+    else 
+        echo "We will send the invoice to $email"
+    fi
+}
+
+function setup() {
+    local section
+    
+    section="$1"
+
+    echo "============================"
+    echo "Setting up $section"
+
+    source "$BASE_DIR/sections/$section/setup"
+
+    echo "====== $section done ======"
+    echo
+}
+
+function print_help() {
+    echo "Usage: setup <OPTIONS>"
+    echo 
+    echo "Options:"
+    echo -e " -n <value>\tFull name"
+    echo -e " -e <value>\tEmail address"
+    echo -e " -f\t\tForce, always overwrite existing files"
+    echo -e " -h\t\tThis help screen"
+}

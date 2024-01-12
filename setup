@@ -1,80 +1,10 @@
 #!/bin/bash
 
-GITCONFIG_LOCATION=~/.gitconfig
+BASE_DIR="$(realpath $(dirname "$0"))"
 
-function ask_input() {
-    if [ "$full_name" == "" ]
-    then
-        read -p "What is your name? " full_name
-    fi
-
-    echo
-    echo "Welcome $full_name! Nice to meet you."
-    echo
-
-    if [ "$email" == "" ]
-    then
-        read -p "What is your email address? " email
-    else 
-        echo "We will send the invoice to $email"
-    fi
-    
-}
-
-function finalize() {
-    echo "Thank you for using the QuackaTech dotfiles installer"
-    echo "We hope you'll have a pleasant day"
-    echo
-}
-
-function check_existing_file() {
-    local file="$1"
-    local overwrite
-
-    if [ -f "$file" ]
-    then
-        echo -n "$file already exists. Overwrite? "
-
-        if [ "$force" == "1" ]
-        then
-            echo "y"
-
-            return 0
-        else
-            read -p "[y/N] " overwrite
-        fi
-
-        if [ "$overwrite" != "y" ]
-        then
-            return 1
-        fi
-    fi
-
-    return 0
-}
-
-function setup_gitconfig() {
-    local cont
-
-    if [ ! -z "${SKIP_GITCONFIG}" ]
-    then
-        echo "Skipping $GITCONFIG_LOCATION setup: SKIP_GITCONFIG env set"
-    fi
-
-    check_existing_file $GITCONFIG_LOCATION
-
-    if [ $? -eq 1 ]
-    then
-        echo "Skipping $GITCONFIG_LOCATION setup: file exists"
-
-        return
-    fi
-
-    echo "Setting up $GITCONFIG_LOCATION"
-
-    cat git/.gitconfig | sed -e "s/##NAME_PLACEHOLDER##/$full_name/g" -e "s/##EMAIL_PLACEHOLDER##/$email/g" > $GITCONFIG_LOCATION
-}
-
+source "$BASE_DIR/lib/base"
+source "$BASE_DIR/lib/env"
+source "$BASE_DIR/lib/fs"
 
 function main() {
     echo "QuackaTech dotfiles installer"
@@ -91,40 +21,39 @@ function main() {
         sleep 3
     fi
 
-    ask_input
+    # Initialize config variables
+    init_variables
 
-    setup_gitconfig
+    # Set up dotfiles
+    setup git
+
+    echo "Thank you for using the QuackaTech dotfiles installer"
+    echo "We hope you'll have a pleasant day"
+    echo
 }
 
 force="0"
 
-while getopts "n:e:f" opt; do
-  case $opt in
-    n)
-        full_name="$OPTARG"
-        ;;
-    e)
-        email="$OPTARG"
-        ;;
-    f) 
-        force="1"
-        ;;
-    :)
-        echo "Option -${OPTARG} requires an argument."
-        exit 1
-        ;;
-    ?)
-        echo "Invalid option: -${OPTARG}."
-        exit 1
-        ;;
-  esac
-
-  case $OPTARG in
-    -*) 
-        echo "Option $opt needs a valid argument"
-        exit 1
-        ;;
-  esac
+while getopts "n:e:fh" opt; do
+    case $opt in
+        n)
+            full_name="$OPTARG"
+            ;;
+        e)
+            email="$OPTARG"
+            ;;
+        f) 
+            force="1"
+            ;;
+        h)
+            print_help
+            exit 0
+            ;;
+        ?)
+            print_help
+            exit 1
+            ;;
+    esac
 done
 
 main
