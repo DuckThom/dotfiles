@@ -1,7 +1,14 @@
 function init_variables() {
+    local fallback_name="$(getent passwd `whoami` | cut -d ':' -f 5)"
+
     if [ "$full_name" == "" ]
     then
-        read -p "What is your name? " full_name
+        read -p "What is your name? [$fallback_name]" full_name
+    fi
+
+    if [ "$full_name" == "" ]
+    then
+        full_name="$fallback_name"
     fi
 
     echo
@@ -21,8 +28,9 @@ function setup() {
     
     section="$1"
 
-    echo "============================"
-    echo "Setting up $section"
+    echo
+    echo "=== setting up $section ==="
+    echo
 
     source "$BASE_DIR/sections/$section/setup"
 
@@ -38,4 +46,12 @@ function print_help() {
     echo -e " -e <value>\tEmail address"
     echo -e " -f\t\tForce, always overwrite existing files"
     echo -e " -h\t\tThis help screen"
+    echo -e " -s <value>\tSelect which sections to run, omit for all. Can be added multiple times. Valid options: ${sections[*]}"
+}
+
+function in_array () {
+  local e match="$1"
+  shift
+  for e; do [[ "$e" == "$match" ]] && return 0; done
+  return 1
 }

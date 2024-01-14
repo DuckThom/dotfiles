@@ -6,6 +6,8 @@ source "$BASE_DIR/lib/base"
 source "$BASE_DIR/lib/env"
 source "$BASE_DIR/lib/fs"
 
+sections=(git)
+
 function main() {
     echo "QuackaTech dotfiles installer"
     echo
@@ -25,7 +27,10 @@ function main() {
     init_variables
 
     # Set up dotfiles
-    setup git
+    for section in ${run_sections[*]}
+    do
+        setup $section
+    done
 
     echo "Thank you for using the QuackaTech dotfiles installer"
     echo "We hope you'll have a pleasant day"
@@ -33,9 +38,13 @@ function main() {
 }
 
 force="0"
+run_sections=()
 
-while getopts "n:e:fh" opt; do
+while getopts "s:n:e:fh" opt; do
     case $opt in
+        s)
+            run_sections+=("$OPTARG")
+            ;;
         n)
             full_name="$OPTARG"
             ;;
@@ -56,4 +65,23 @@ while getopts "n:e:fh" opt; do
     esac
 done
 
-main
+if [[ "${run_sections[*]}" == "" ]]
+then
+    run_sections=${sections[*]}
+fi
+
+for section in ${run_sections[*]}
+do
+    in_array $section "${sections[@]}"
+
+    if [[ $? != 0 ]]
+    then
+        echo "Error: invalid section $section"
+        
+        print_help
+
+        exit 1
+    fi
+done
+
+main 
