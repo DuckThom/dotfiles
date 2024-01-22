@@ -23,3 +23,5 @@ function check_existing_file() {
 
     return 0
 }
+
+# vim: syntax=sh

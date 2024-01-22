@@ -1,0 +1,3 @@
+GITCONFIG_LOCATION=${GITCONFIG_LOCATION:="~/.gitconfig"}
+
+# vim: syntax=sh

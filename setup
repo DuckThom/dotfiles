@@ -2,86 +2,13 @@
 
 BASE_DIR="$(realpath $(dirname "$0"))"
 
-source "$BASE_DIR/lib/base"
-source "$BASE_DIR/lib/env"
-source "$BASE_DIR/lib/fs"
-
 sections=(git)
 
-function main() {
-    echo "QuackaTech dotfiles installer"
-    echo
-
-    if [ "$force" == "1" ]
-    then
-        echo
-        echo "###############################################"
-        echo "# Warning: use of lethal force is authorized! #"
-        echo "###############################################"
-        echo
-        
-        sleep 3
-    fi
-
-    # Initialize config variables
-    init_variables
-
-    # Set up dotfiles
-    for section in ${run_sections[*]}
-    do
-        setup $section
-    done
-
-    echo "Thank you for using the QuackaTech dotfiles installer"
-    echo "We hope you'll have a pleasant day"
-    echo
-}
-
-force="0"
-run_sections=()
-
-while getopts "s:n:e:fh" opt; do
-    case $opt in
-        s)
-            run_sections+=("$OPTARG")
-            ;;
-        n)
-            full_name="$OPTARG"
-            ;;
-        e)
-            email="$OPTARG"
-            ;;
-        f) 
-            force="1"
-            ;;
-        h)
-            print_help
-            exit 0
-            ;;
-        ?)
-            print_help
-            exit 1
-            ;;
-    esac
-done
-
-if [[ "${run_sections[*]}" == "" ]]
-then
-    run_sections=${sections[*]}
-fi
-
-for section in ${run_sections[*]}
-do
-    in_array $section "${sections[@]}"
-
-    if [[ $? != 0 ]]
-    then
-        echo "Error: invalid section $section"
-        
-        print_help
-
-        exit 1
-    fi
-done
+source "$BASE_DIR/lib/env"
+source "$BASE_DIR/lib/base"
+source "$BASE_DIR/lib/fs"
+source "$BASE_DIR/lib/main"
 
 main 
+
+# vim: syntax=sh

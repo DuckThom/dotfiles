@@ -1,6 +1,4 @@
-source "$BASE_DIR/lib/git/env"
-
-function setup_gitconfig() {
+function setup_zsh_config() {
     check_existing_file $GITCONFIG_LOCATION
 
     if [ $? -eq 1 ]
@@ -15,6 +13,6 @@ function setup_gitconfig() {
     cat git/.gitconfig | sed -e "s/##NAME_PLACEHOLDER##/$full_name/g" -e "s/##EMAIL_PLACEHOLDER##/$email/g" > $GITCONFIG_LOCATION
 }
 
-setup_gitconfig
+setup_zsh_config
 
 # vim: syntax=sh
