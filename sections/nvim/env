@@ -1,0 +1,3 @@
+NVIM_CONFIG_LOCATION=${NVIM_CONFIG_LOCATION:="$HOME/.config/nvim"}
+
+# vim: syntax=sh

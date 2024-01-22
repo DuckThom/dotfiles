@@ -1,0 +1,3 @@
+ZSHRC_LOCATION=${ZSHRC_LOCATION:="$HOME/.zshrc"}
+
+# vim: syntax=sh

@@ -1,0 +1,21 @@
+source "$BASE_DIR/sections/nvim/env"
+
+function setup_nvim() {
+    check_existing_file $NVIM_CONFIG_LOCATION/init.lua
+
+    if [ $? -eq 1 ]
+    then
+        echo "Skipping $NVIM_CONFIG_LOCATION setup: file exists"
+
+        return
+    fi
+
+    echo "Setting up $NVIM_CONFIG_LOCATION"
+
+    mkdir -p $NVIM_CONFIG_LOCATION
+    cp "$BASE_DIR/sections/nvim/init.lua" "$NVIM_CONFIG_LOCATION"
+}
+
+setup_nvim
+
+# vim: syntax=sh

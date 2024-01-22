@@ -14,9 +14,6 @@ function main() {
         sleep 3
     fi
 
-    # Initialize config variables
-    init_variables
-
     # Set up dotfiles
     for section in ${run_sections[*]}
     do

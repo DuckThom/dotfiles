@@ -1,16 +1,16 @@
+source "$BASE_DIR/sections/zsh/env"
+
 function setup_zsh_config() {
-    check_existing_file $GITCONFIG_LOCATION
+    check_existing_file $ZSHRC_LOCATION
 
     if [ $? -eq 1 ]
     then
-        echo "Skipping $GITCONFIG_LOCATION setup: file exists"
+        echo "Skipping $ZSHRC_LOCATION setup: file exists"
 
         return
     fi
 
-    echo "Setting up $GITCONFIG_LOCATION"
-
-    cat git/.gitconfig | sed -e "s/##NAME_PLACEHOLDER##/$full_name/g" -e "s/##EMAIL_PLACEHOLDER##/$email/g" > $GITCONFIG_LOCATION
+    echo "Setting up $ZSHRC_LOCATION"
 }
 
 setup_zsh_config

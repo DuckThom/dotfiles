@@ -34,6 +34,7 @@ function setup() {
 
     source "$BASE_DIR/sections/$section/setup"
 
+    echo
     echo "====== $section done ======"
     echo
 }
