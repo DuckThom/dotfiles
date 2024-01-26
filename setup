@@ -2,7 +2,7 @@
 
 BASE_DIR="$(realpath $(dirname "$0"))"
 
-sections=(git nvim)
+sections=(git nvim tmux)
 
 source "$BASE_DIR/lib/env"
 source "$BASE_DIR/lib/base"

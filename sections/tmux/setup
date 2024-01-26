@@ -1,0 +1,20 @@
+source "$BASE_DIR/sections/tmux/env"
+
+function setup_tmux() {
+    check_existing_file $TMUX_CONFIG_LOCATION/.tmux.conf
+
+    if [ $? -eq 1 ]
+    then
+        echo "Skipping $TMUX_CONFIG_LOCATION setup: file exists"
+
+        return
+    fi
+
+    echo "Setting up $TMUX_CONFIG_LOCATION"
+
+    cp "$BASE_DIR/sections/tmux/.tmux.conf" "$TMUX_CONFIG_LOCATION"
+}
+
+setup_tmux
+
+# vim: syntax=sh

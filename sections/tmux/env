@@ -1,0 +1,3 @@
+TMUX_CONFIG_LOCATION=${TMUX_CONFIG_LOCATION:="$HOME"}
+
+# vim: syntax=sh
