@@ -2,4 +2,8 @@
 
 1. Install nix 
 2. Clone repo 
-3. `home-manager switch --flake .`
+3. `home-manager switch --flake .#<hostname>`
+
+## hostnames 
+
+- `quackpad`
