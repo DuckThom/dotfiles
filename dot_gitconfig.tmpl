@@ -1,0 +1,36 @@
+[user]
+	name = "Thomas Wiringa"
+	email = "thomas.wiringa@gmail.com"
+	signingkey = ~/.ssh/bw_git_signing.pub
+
+[alias]
+	b = branch
+	st = status
+	co = checkout
+	puoh = push -u origin HEAD
+	ds = diff --staged
+	touch = commit --amend --date now
+
+[init]
+	defaultBranch = main
+
+[pull]
+	rebase = false
+
+[push]
+	default = simple
+
+[commit]
+	gpgsign = true
+
+[tag]
+	gpgSign = true
+
+[gpg]
+	format = ssh
+
+[core]
+	editor = nvim
+
+[includeIf "hasconfig:remote.*.url:ssh://git@bitbucket.{{ (bitwardenSecrets .bitwarden.secrets.work.domain .bwsAccessToken).value }}:7999/**"]
+	path = ~/.gitconfig-work

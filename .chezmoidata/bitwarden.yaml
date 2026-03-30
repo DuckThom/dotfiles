@@ -1,0 +1,8 @@
+bitwarden:
+  secrets:
+    tailscale:
+      domain: "d3e55c5d-4eaf-4baf-a5a5-b41d014ce68d"
+
+    work:
+      username: "b73dce26-38a5-4c33-8c58-b41d015152ad"
+      domain: "f4ee875d-785f-450a-8c18-b41d014dc10f"

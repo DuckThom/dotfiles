@@ -1,0 +1,8 @@
+ssh:
+  public_keys:
+    - filename: tailscale.pub
+      contents: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG61aXw8HAyK9gFYPzqp7fX+Goeioj1tWf1/cQ3pR1fY"
+    - filename: git-signing.pub
+      contents: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIfmJX9B784mnoo7zZEdkXYnemkedVMSV0wEddV+NDcT"
+    - filename: personal-key.pub
+      contents: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO+z01Mwukwky8MY5qPg4QJuR6kxjWwLEbk/ZCpbgbvF"

@@ -1,0 +1,19 @@
+Host *
+	ServerAliveInterval 30
+	IdentitiesOnly yes
+	IdentityFile ~/.ssh/bw_personal_key.pub
+
+Host github.com gitlab.{{ (bitwardenSecrets "d3e55c5d-4eaf-4baf-a5a5-b41d014ce68d" .bwsAccessToken).value }}
+	IdentityFile ~/.ssh/bw_personal_key.pub
+
+Host *.{{ (bitwardenSecrets "d3e55c5d-4eaf-4baf-a5a5-b41d014ce68d" .bwsAccessToken).value }}
+	IdentityFile ~/.ssh/bw_tailscale.pub
+
+Host *.{{ (bitwardenSecrets "f4ee875d-785f-450a-8c18-b41d014dc10f" .bwsAccessToken).value }} jump fs
+	User t.wiringa
+
+Host jump
+	HostName jump.{{ (bitwardenSecrets "f4ee875d-785f-450a-8c18-b41d014dc10f" .bwsAccessToken).value }}
+
+Host fs
+	HostName fs.{{ (bitwardenSecrets "f4ee875d-785f-450a-8c18-b41d014dc10f" .bwsAccessToken).value }}

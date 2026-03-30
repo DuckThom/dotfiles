@@ -1,0 +1,2 @@
+[user]
+	email = {{ (bitwardenSecrets .bitwarden.secrets.work.username .bwsAccessToken).value }}@{{ (bitwardenSecrets .bitwarden.secrets.work.domain .bwsAccessToken).value }}
