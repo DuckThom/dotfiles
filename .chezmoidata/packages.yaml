@@ -5,6 +5,16 @@ packages:
       - wget
     snaps:
       - bruno
+    scripts:
+      - name: "Jetbrains Toolbox"
+        ifNotExists: jetbrains-toolbox
+        run: |
+          TOOLBOX_VERSION="3.4.1.78303"
+          wget -O/tmp/jetbrains-toolbox.tar.gz https://download.jetbrains.com/toolbox/jetbrains-toolbox-${TOOLBOX_VERSION}.tar.gz
+          tar zxvf /tmp/jetbrains-toolbox.tar.gz -C ~/.local
+          mv ~/.local/jetbrains-toolbox-${TOOLBOX_VERSION} ~/.local/jetbrains-toolbox
+          ~/.local/jetbrains-toolbox/bin/jetbrains-toolbox & disown
+          rm -rf /tmp/jetbrains-toolbox.tar.gz
   darwin:
     brews:
       - git

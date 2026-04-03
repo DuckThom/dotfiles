@@ -2,7 +2,6 @@
 
 {{ if eq .chezmoi.os "darwin" }}
 
-echo "Installing Homebrew dependencies"
 brew bundle --file=/dev/stdin <<EOF
 {{ range .packages.darwin.brews -}}
 brew {{ . | quote }}
@@ -15,13 +14,30 @@ EOF
 {{ else if eq .chezmoi.os "linux" }}
 
 {{- if .packages.linux.apt }}
-echo "Installing APT dependencies"
 sudo apt install {{ .packages.linux.apt | join " " }}
 {{ end -}}
 
 {{- if .packages.linux.snaps }}
-echo "Installing Snaps"
-sudo snap install {{ .packages.linux.snaps | join " " }}
+{{ range .packages.linux.snaps }}
+if ! sudo snap list {{ . }} &> /dev/null
+then
+    sudo snap install {{ . }}
+fi
+{{ end -}}
+
+{{- if .packages.linux.scripts }}
+{{ range .packages.linux.scripts }}
+{{- if hasKey . "ifNotExists" }}
+if ! command -v {{ .ifNotExists }} &> /dev/null
+then
+	{{ .run }}
+fi
+{{ else }}
+{{ .run }}
+{{ end -}}
+{{ end -}}
+{{ end -}}
+
 {{ end -}}
 
 {{ else }}
@@ -29,16 +45,13 @@ sudo snap install {{ .packages.linux.snaps | join " " }}
 {{ end -}}
 
 {{- if .packages.shared.scripts }}
-echo "Running package scripts"
 {{ range .packages.shared.scripts }}
 {{- if hasKey . "ifNotExists" }}
-if [ ! command -v {{ .ifNotExists }} &> /dev/null ]
+if ! command -v {{ .ifNotExists }} &> /dev/null
 then
-	echo "Installing {{ .name }}"
 	{{ .run }}
 fi
 {{ else }}
-echo "Installing {{ .name }}"
 {{ .run }}
 {{ end -}}
 {{ end -}}
