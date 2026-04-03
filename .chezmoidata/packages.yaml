@@ -1,0 +1,20 @@
+packages:
+  linux:
+    apt:
+      - curl
+      - wget
+    snaps:
+      - bruno
+  darwin:
+    brews:
+      - git
+      - bruno
+    casks: []
+  shared:
+    scripts:
+      - name: Zed
+        ifNotExists: zed
+        run: "curl -f https://zed.dev/install.sh | sh"
+      - name: oh-my-posh
+        ifNotExists: oh-my-posh
+        run: "curl -s https://ohmyposh.dev/install.sh | bash -s"
